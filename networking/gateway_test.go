@@ -12,7 +12,7 @@ func Test_nets_GetGatewayIP(t *testing.T) {
 	fmt.Println(err)
 	pprint.PrintJOSN(GetGatewayIP)
 
-	GetInterfacesNames, err := nets.GetInterfacesNames()
+	GetInterfacesNames, err := nets.GetNetworkByIface("wlp3s0")
 	fmt.Println(err)
 	pprint.PrintJOSN(GetInterfacesNames)
 	GetValidNetInterfaces, err := nets.GetValidNetInterfaces()

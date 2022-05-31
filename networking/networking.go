@@ -1,6 +1,8 @@
 package networking
 
 import (
+	"errors"
+	"fmt"
 	"net"
 	"strings"
 )
@@ -9,7 +11,7 @@ type Nets interface {
 	GetGatewayIP(iFaceName string) (ip string, err error) //gateways
 
 	GetNetworks() (interfaces []NetworkInterfaces, err error) //networks
-	GetNetworkByIface(name string) (network *NetworkInterfaces, err error)
+	GetNetworkByIface(name string) (network NetworkInterfaces, err error)
 	GetValidNetInterfaces() (interfaces []net.Interface, err error)
 	GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, err error)
 	CheckInterfacesName(iFaceName string) (bool, error)
@@ -148,16 +150,19 @@ func (inst *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 	return interfaces, err
 }
 
-func (inst *nets) GetNetworkByIface(name string) (network *NetworkInterfaces, err error) {
+func (inst *nets) GetNetworkByIface(name string) (network NetworkInterfaces, err error) {
 	all, err := inst.GetNetworks()
 	if err != nil {
 		return
 	}
+
 	for _, interfaces := range all {
+		fmt.Println(interfaces.Interface, err, name == interfaces.Interface)
 		if name == interfaces.Interface {
-			return &interfaces, nil
+			fmt.Println(interfaces)
+			return interfaces, nil
 		}
 	}
 
-	return nil, nil
+	return NetworkInterfaces{}, errors.New("interface not found")
 }
