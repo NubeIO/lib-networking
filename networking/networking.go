@@ -9,7 +9,7 @@ type Nets interface {
 	GetGatewayIP(iFaceName string) (ip string, err error) //gateways
 
 	GetNetworks() (interfaces []NetworkInterfaces, err error) //networks
-	GetNetworkByIface(name string) (network NetworkInterfaces, err error)
+	GetNetworkByIface(name string) (network *NetworkInterfaces, err error)
 	GetValidNetInterfaces() (interfaces []net.Interface, err error)
 	GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, err error)
 
@@ -25,8 +25,8 @@ type Nets interface {
 // nets type
 type nets struct{}
 
-// NewNets make an instance of nets
-func NewNets() Nets {
+// New make an instance of nets
+func New() Nets {
 	return &nets{}
 }
 
@@ -148,15 +148,16 @@ func (nets *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 	return interfaces, err
 }
 
-func (nets *nets) GetNetworkByIface(name string) (network NetworkInterfaces, err error) {
+func (nets *nets) GetNetworkByIface(name string) (network *NetworkInterfaces, err error) {
 	all, err := nets.GetNetworks()
 	if err != nil {
 		return
 	}
-	for _, network = range all {
-		if name == network.Interface {
-			return network, nil
+	for _, interfaces := range all {
+		if name == interfaces.Interface {
+			return &interfaces, nil
 		}
 	}
-	return
+
+	return nil, nil
 }
