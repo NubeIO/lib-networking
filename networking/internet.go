@@ -23,7 +23,7 @@ type Check struct {
 }
 
 //CheckInternetByInterface check internet connection for a port (will ping google.com)
-func (nets *nets) CheckInternetByInterface(iface string) (connection Check, err error) {
+func (inst *nets) CheckInternetByInterface(iface string) (connection Check, err error) {
 	cmd := fmt.Sprintf("if ping -I %s -c 2 google.com; then echo OK; else echo DEAD ;fi", iface)
 	ping, err := command.Run("bash", "-c", cmd)
 	if err != nil {
@@ -42,7 +42,7 @@ func (nets *nets) CheckInternetByInterface(iface string) (connection Check, err 
 }
 
 // GetInternetIP fetches external IP address in ipv4 format
-func (nets *nets) GetInternetIP() (connection Check, err error) {
+func (inst *nets) GetInternetIP() (connection Check, err error) {
 	resp, err := http.Get("https://checkip.amazonaws.com")
 	if err != nil {
 		return
@@ -73,8 +73,8 @@ type NetInterface struct {
 	Flags        string   // Network interface flags (up, broadcast, etc)
 }
 
-func (nets *nets) GetValidNetInterfacesForWeb() ([]NetInterface, error) {
-	ifaces, err := nets.GetValidNetInterfaces()
+func (inst *nets) GetValidNetInterfacesForWeb() ([]NetInterface, error) {
+	ifaces, err := inst.GetValidNetInterfaces()
 	if err != nil {
 		return nil, errors.New("couldn't get interfaces")
 	}

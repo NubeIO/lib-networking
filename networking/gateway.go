@@ -7,7 +7,7 @@ import (
 )
 
 //GetGatewayIP Get gateway IP address
-func (nets *nets) GetGatewayIP(iFaceName string) (ip string, err error) {
+func (inst *nets) GetGatewayIP(iFaceName string) (ip string, err error) {
 	cmd := exec.Command("ip", "route", "show", "dev", iFaceName)
 	d, err := cmd.Output()
 	if err != nil || cmd.ProcessState.ExitCode() != 0 {

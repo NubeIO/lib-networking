@@ -5,8 +5,8 @@ import (
 )
 
 //GetSubnet returns 255.255.255.0
-func (nets *nets) GetSubnet(iFaceName string) (subnet string, err error) {
-	net, err := nets.GetNetworkByIface(iFaceName)
+func (inst *nets) GetSubnet(iFaceName string) (subnet string, err error) {
+	net, err := inst.GetNetworkByIface(iFaceName)
 	if err != nil {
 		log.Errorf("Could not get network interfaces info: %v", err)
 		return
@@ -16,8 +16,8 @@ func (nets *nets) GetSubnet(iFaceName string) (subnet string, err error) {
 }
 
 //GetSubnetCIDR returns 24
-func (nets *nets) GetSubnetCIDR(iFaceName string) (cidr int, err error) {
-	net, err := nets.GetNetworkByIface(iFaceName)
+func (inst *nets) GetSubnetCIDR(iFaceName string) (cidr int, err error) {
+	net, err := inst.GetNetworkByIface(iFaceName)
 	if err != nil {
 		log.Errorf("Could not get network interfaces info: %v", err)
 		return

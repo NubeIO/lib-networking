@@ -12,7 +12,7 @@ type Nets interface {
 	GetNetworkByIface(name string) (network *NetworkInterfaces, err error)
 	GetValidNetInterfaces() (interfaces []net.Interface, err error)
 	GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, err error)
-
+	CheckInterfacesName(iFaceName string) (bool, error)
 	GetInterfacesNames() (InterfaceNames, error) //internet
 	GetValidNetInterfacesForWeb() ([]NetInterface, error)
 	CheckInternetByInterface(iface string) (connection Check, err error)
@@ -58,7 +58,7 @@ func ParseCIDR(s string) (*CIDR, error) {
 }
 
 // GetNetworks fetches system network addresses
-func (nets *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
+func (inst *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
 	var networkInterfaces NetworkInterfaces
 	if ifaces, err := net.Interfaces(); err == nil {
 		if err != nil {
@@ -92,7 +92,7 @@ func (nets *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
 						networkInterfaces.NetMaskLength = ToInt(mask[1])
 					}
 					networkInterfaces.NetMask = ipv4MaskString(ip.DefaultMask())
-					networkInterfaces.Gateway, err = nets.GetGatewayIP(iface.Name)
+					networkInterfaces.Gateway, err = inst.GetGatewayIP(iface.Name)
 					networkInterfaces.MacAddress = iface.HardwareAddr.String()
 					interfaces = append(interfaces, networkInterfaces)
 				}
@@ -102,7 +102,7 @@ func (nets *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
 	return interfaces, err
 }
 
-func (nets *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, err error) {
+func (inst *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, err error) {
 	var networkInterfaces NetworkInterfaces
 	if ifaces, err := net.Interfaces(); err == nil {
 		if err != nil {
@@ -136,7 +136,7 @@ func (nets *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 						networkInterfaces.NetMaskLength = ToInt(mask[1])
 					}
 					networkInterfaces.NetMask = ipv4MaskString(ip.DefaultMask())
-					networkInterfaces.Gateway, err = nets.GetGatewayIP(iface.Name)
+					networkInterfaces.Gateway, err = inst.GetGatewayIP(iface.Name)
 					networkInterfaces.MacAddress = iface.HardwareAddr.String()
 					if networkInterfaces.Gateway != "" {
 						interfaces = append(interfaces, networkInterfaces)
@@ -148,8 +148,8 @@ func (nets *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 	return interfaces, err
 }
 
-func (nets *nets) GetNetworkByIface(name string) (network *NetworkInterfaces, err error) {
-	all, err := nets.GetNetworks()
+func (inst *nets) GetNetworkByIface(name string) (network *NetworkInterfaces, err error) {
+	all, err := inst.GetNetworks()
 	if err != nil {
 		return
 	}
