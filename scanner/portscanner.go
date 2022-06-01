@@ -1,7 +1,6 @@
 package scanner
 
 import (
-	"errors"
 	"fmt"
 	"github.com/NubeIO/lib-networking/ip"
 	"github.com/NubeIO/lib-networking/networking"
@@ -53,9 +52,8 @@ func (inst *Scanner) ResoleAddress(ip string, count int, interfaceName string) (
 	} else {
 		if interfaceName != "" {
 			n, err := networks.GetNetworkByIface(interfaceName)
-
-			if err != nil || n == nil {
-				return nil, errors.New("failed to find network interface")
+			if err != nil {
+				return nil, err
 			}
 			ip = n.Gateway
 		} else {

@@ -9,7 +9,7 @@ func TestPortScanner(t *testing.T) {
 
 	ports := []string{"22", "1414", "1883", "1660", "502", "80", "7"}
 
-	address, err := New().ResoleAddress("er432", 50, "")
+	address, err := New().ResoleAddress("", 50, "wlp3s0")
 	if err != nil {
 		fmt.Println("err msg", err)
 		return
