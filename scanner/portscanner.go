@@ -21,7 +21,7 @@ func New() *Scanner {
 }
 
 type PortList struct {
-	ServiceName string `json:"service_name"`
+	ServiceName string `json:"service"`
 	Port        string `json:"port"`
 }
 

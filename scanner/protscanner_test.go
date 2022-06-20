@@ -2,6 +2,7 @@ package scanner
 
 import (
 	"fmt"
+	pprint "github.com/NubeIO/lib-networking/print"
 	"testing"
 )
 
@@ -18,5 +19,6 @@ func TestPortScanner(t *testing.T) {
 	results := New().IPScanner(address, ports, true)
 	fmt.Println(results)
 	fmt.Println("-------------HOSTS------------------")
+	pprint.PrintJOSN(results)
 
 }
