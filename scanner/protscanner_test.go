@@ -8,9 +8,9 @@ import (
 
 func TestPortScanner(t *testing.T) {
 
-	ports := []string{"22", "1414", "1883", "1660", "502", "80", "7"}
+	ports := []string{"22", "1414", "1883", "1662", "502", "80", "7"}
 
-	address, err := New().ResoleAddress("", 50, "wlp3s0")
+	address, err := New().ResoleAddress("", 254, "wlp3s0")
 	if err != nil {
 		fmt.Println("err msg", err)
 		return

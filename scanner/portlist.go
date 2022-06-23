@@ -57,7 +57,9 @@ var portShortList = map[string]string{
 	"1615": "nube-rubix-bios",
 	"1616": "nube-rubix-service",
 	"1660": "nube-flow-framework",
-	"1770": "nube-rubix-apps",
+	"1661": "nube-edge",
+	"1662": "nube-assist",
+	"1663": "nube-automater",
 	"1880": "node-red",
 	"1883": "mqtt-broker",
 }

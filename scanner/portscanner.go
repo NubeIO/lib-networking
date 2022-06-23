@@ -40,8 +40,8 @@ func (inst *Scanner) ResoleAddress(ip string, count int, interfaceName string) (
 	if count > 254 {
 		count = 254
 	}
-	if count < 0 {
-		count = 1
+	if count <= 0 {
+		count = 254
 	}
 	if ip != "" {
 		err := ipUtil.IsIPAddrErr(ip)
