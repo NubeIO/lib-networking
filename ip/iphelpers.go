@@ -127,11 +127,11 @@ func GetIPSubnet(ip, netmask string) (ipPrefix, prefix string, err error) {
 
 	// Get network
 	sPrefix := strconv.Itoa(p)
-	_, network, err := net.ParseCIDR(ip + "/" + sPrefix)
+	_, _, err = net.ParseCIDR(ip + "/" + sPrefix)
 	if err != nil {
 		return "", "", err
 	}
-	return network.IP.String() + "/" + sPrefix, sPrefix, nil
+	return ip + "/" + sPrefix, sPrefix, nil
 }
 
 // SubnetString SubnetString("24") => "255.255.255.0"
