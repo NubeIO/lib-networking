@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"github.com/jackpal/gateway"
 	"net"
 	"os/exec"
 	"strings"
@@ -8,6 +9,15 @@ import (
 
 //GetGatewayIP Get gateway IP address
 func (inst *nets) GetGatewayIP(iFaceName string) (ip string, err error) {
+	discoverInterface, err := gateway.DiscoverGateway()
+	if err != nil {
+		return "", err
+	}
+	return discoverInterface.String(), nil
+}
+
+//GetGatewayIPLinux Get gateway IP address
+func (inst *nets) GetGatewayIPLinux(iFaceName string) (ip string, err error) {
 	cmd := exec.Command("ip", "route", "show", "dev", iFaceName)
 	d, err := cmd.Output()
 	if err != nil || cmd.ProcessState.ExitCode() != 0 {

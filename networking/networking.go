@@ -2,7 +2,6 @@ package networking
 
 import (
 	"errors"
-	"fmt"
 	"net"
 	"strings"
 )
@@ -157,9 +156,7 @@ func (inst *nets) GetNetworkByIface(name string) (network NetworkInterfaces, err
 	}
 
 	for _, interfaces := range all {
-		fmt.Println(interfaces.Interface, err, name == interfaces.Interface)
 		if name == interfaces.Interface {
-			fmt.Println(interfaces)
 			return interfaces, nil
 		}
 	}
