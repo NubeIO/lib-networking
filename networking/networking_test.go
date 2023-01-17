@@ -7,7 +7,7 @@ import (
 
 func TestNetworking(*testing.T) {
 
-	found, err := New().CheckInterfacesName("www")
+	found, err := New().GetNetworkByIface("wlp0s20f3")
 	fmt.Println(found, err)
 
 }
