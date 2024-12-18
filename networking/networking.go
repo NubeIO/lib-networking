@@ -75,8 +75,10 @@ func (inst *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
 					switch v := addr.(type) {
 					case *net.IPNet:
 						ip = v.IP
+						networkInterfaces.NetMask = net.IP(v.Mask).String()
 					case *net.IPAddr:
 						ip = v.IP
+						networkInterfaces.NetMask = ""
 					}
 					if ip == nil || ip.IsLoopback() {
 						continue
@@ -92,7 +94,6 @@ func (inst *nets) GetNetworks() (interfaces []NetworkInterfaces, err error) {
 					if len(mask) >= 1 {
 						networkInterfaces.NetMaskLength = ToInt(mask[1])
 					}
-					networkInterfaces.NetMask = ipv4MaskString(ip.DefaultMask())
 					networkInterfaces.Gateway, err = inst.GetGatewayIP(iface.Name)
 					networkInterfaces.MacAddress = iface.HardwareAddr.String()
 					interfaces = append(interfaces, networkInterfaces)
@@ -119,8 +120,10 @@ func (inst *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 					switch v := addr.(type) {
 					case *net.IPNet:
 						ip = v.IP
+						networkInterfaces.NetMask = net.IP(v.Mask).String()
 					case *net.IPAddr:
 						ip = v.IP
+						networkInterfaces.NetMask = ""
 					}
 					if ip == nil || ip.IsLoopback() {
 						continue
@@ -136,7 +139,6 @@ func (inst *nets) GetNetworksThatHaveGateway() (interfaces []NetworkInterfaces, 
 					if len(mask) >= 1 {
 						networkInterfaces.NetMaskLength = ToInt(mask[1])
 					}
-					networkInterfaces.NetMask = ipv4MaskString(ip.DefaultMask())
 					networkInterfaces.Gateway, err = inst.GetGatewayIP(iface.Name)
 					networkInterfaces.MacAddress = iface.HardwareAddr.String()
 					if networkInterfaces.Gateway != "" {
